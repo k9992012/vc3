@@ -6,8 +6,8 @@ let year = new Date().getFullYear()
 let month = new Date().getMonth() + 1
 export default new Vuex.Store({
   state: {
-    waterUserId: '891209472001', // 取水户id
-    waterSourceId: '440607000001', // 水源地id
+    waterUserId: '', // 取水户id
+    waterSourceId: '', // 水源地id
     waterAreaId: '', // 水功能区id
     waterAreaDate: year + '-' + (month > 9 ? month : ('0' + month)), // 水功能区下拉列表选择的时间
     menuIndex: '', // 菜单索引
