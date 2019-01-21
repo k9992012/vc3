@@ -47,27 +47,27 @@
       <div class="legend">
         <ul>
           <li>
-            <span style="background-color:#10ffa8" class="colorCircle"></span>
+            <span style="background-color:#0000fe" class="colorCircle"></span>
             <span class="text">I类</span>
           </li>
           <li>
-            <span style="background-color:#5c49ff" class="colorCircle"></span>
+            <span style="background-color:#0bfb00" class="colorCircle"></span>
             <span class="text">Ⅱ类</span>
           </li>
           <li>
-            <span style="background-color:#2099ff" class="colorCircle"></span>
+            <span style="background-color:#ffff00" class="colorCircle"></span>
             <span class="text">Ⅲ类</span>
           </li>
           <li>
-            <span style="background-color:#ffec13" class="colorCircle"></span>
+            <span style="background-color:#fe0000" class="colorCircle"></span>
             <span class="text">Ⅳ类</span>
           </li>
           <li>
-            <span style="background-color:#c35aff" class="colorCircle"></span>
+            <span style="background-color:#ff00fe" class="colorCircle"></span>
             <span class="text">Ⅴ类</span>
           </li>
           <li>
-            <span style="background-color:#ff4c22" class="colorCircle"></span>
+            <span style="background-color:#777777" class="colorCircle"></span>
             <span class="text">劣Ⅴ类</span>
           </li>
         </ul>
@@ -184,6 +184,15 @@ export default {
     this.getAdsData()
     this.getAhgsllbData()
     this.getSydInfo()
+    let _this = this
+    this.moduleConfig.timer = setInterval(() => {
+      _this.getAdsData()
+      _this.getAhgsllbData()
+      _this.getSydInfo()
+    }, this.moduleConfig.refreshTime)
+  },
+  destroyed () {
+    clearInterval(this.moduleConfig.timer)
   }
 }
 </script>
@@ -207,7 +216,7 @@ export default {
 
       .ads
         color: #fff
-        font-size: 18px
+        font-size: 22px
         text-align: left
         margin-top: 40px
 
@@ -232,8 +241,8 @@ export default {
       .adsLegend
         position: absolute
         color: #fff
-        font-size: 18px
-        bottom: 131px
+        font-size: 22px
+        bottom: 43px
         right: 102px
 
         > span
@@ -256,7 +265,7 @@ export default {
       color: #fff
       font-size: 18px
       position: relative
-      margin: 28px 0 0 0
+      margin: 28px 0 0 -55px
       text-align: left
 
       > div
@@ -264,7 +273,7 @@ export default {
 
         .label
           margin-left: 52px
-          font-size: 18px
+          font-size: 22px
 
         .value
           font-family: Quartz
@@ -273,7 +282,7 @@ export default {
           margin-left: 52px
 
       .jcpjgs
-        width: 168px
+        width: 190px
         height: 68px
         margin: 40px 0 0 16px
         background: url('../../assets/images/jcpjgs.png') 0 center no-repeat
@@ -289,9 +298,9 @@ export default {
 
         .label
           float: left
-          font-size: 20px
+          font-size: 22px
           text-align: left
-          margin-left: 20px
+          margin-left: 9px
           height: 28px
           line-height: 28px
 
@@ -339,16 +348,16 @@ export default {
 
       .legend
         color: #fff
-        font-size: 17px
+        font-size: 22px
         position: absolute
-        width: 150px
+        width: 187px
         bottom: 35px
-        right: 154px
+        right: 145px
 
         ul
           li
             display: inline-block
-            width: 72px
+            width: 90px
             height: 18px
             line-height: 18px
             text-align: left

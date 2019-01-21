@@ -4,7 +4,7 @@
       <img class="light lightLeft" src="../../assets/images/light.png" height="26" width="66"/>
       <img class="light lightRight" src="../../assets/images/light.png" height="26" width="66"/>
       <img class="grid" src="../../assets/images/square_left.png"/>
-      <span>{{sydInfo.wfzNm | nullValue}}</span>
+      <span>{{sydInfo.swsNm | nullValue}}</span>
       <img class="grid" src="../../assets/images/square_right.png"/>
     </h1>
     <div class="left">
@@ -31,12 +31,14 @@
           <span class="label">{{sydInfo.wqGoalNm | nullValue}}</span>
         </div>
         <div class="bItem">
-          <span class="label">双因子/全因子评价结果:</span>
-          <span class="label">{{sydInfo.syzWqgNm | nullValue}}</span>
-          <span class="wdb">{{sydInfo.syzRts | yzFil}}</span>/
-          <span class="label">{{sydInfo.qyzWqgNm | nullValue}}</span>
-          <span class="wdb">{{sydInfo.qyzRts | yzFil}}</span>
+          <!--<span class="label">双因子/全因子评价结果:</span>-->
+          <span class="label">评价结果:</span>
+          <span class="label">{{sydInfo.wqg | nullValue}} </span>
+          <!--<span class="wdb">{{sydInfo.syzRts | yzFil}}</span>/-->
+          <!--<span class="label">{{sydInfo.qyzWqgNm | nullValue}}</span>-->
+          <!--<span class="wdb">{{sydInfo.qyzRts | yzFil}}</span>-->
           <span class="label">({{sydInfo.asot | nullValue}})</span>
+          <span class="wdb">{{sydInfo.rts | yzFil}}</span>
         </div>
         <!--<div class="bItem">-->
         <!--<span class="label">全因子评价结果:</span>-->
@@ -100,7 +102,7 @@
         <ul class="infoBox">
           <li>
             <div class="iconBox">
-              <img src="../../assets/images/wd.png" class="icon" alt="wd">
+              <img src="../../assets/images/wd.png" class="icon">
             </div>
             <div class="info">
               <div class="label">温度</div>
@@ -109,7 +111,7 @@
           </li>
           <li>
             <div class="iconBox">
-              <img src="../../assets/images/pH.png" class="icon" alt="pH">
+              <img src="../../assets/images/pH.png" class="icon">
             </div>
             <div class="info">
               <div class="label">pH</div>
@@ -118,7 +120,7 @@
           </li>
           <li>
             <div class="iconBox">
-              <img src="../../assets/images/rjy.png" class="icon" alt="rjy">
+              <img src="../../assets/images/rjy.png" class="icon">
             </div>
             <div class="info">
               <div class="label">溶解氧</div>
@@ -127,7 +129,7 @@
           </li>
           <li>
             <div class="iconBox">
-              <img src="../../assets/images/ddl.png" class="icon" alt="ddl">
+              <img src="../../assets/images/ddl.png" class="icon">
             </div>
             <div class="info">
               <div class="label">导电率</div>
@@ -138,7 +140,7 @@
         <ul class="infoBoxRight">
           <li>
             <div class="iconBox">
-              <img src="../../assets/images/zd.png" class="icon" alt="zd">
+              <img src="../../assets/images/zd.png" class="icon">
             </div>
             <div class="info">
               <div class="label">浊度</div>
@@ -147,7 +149,7 @@
           </li>
           <li>
             <div class="iconBox">
-              <img src="../../assets/images/gmsyzs.png" class="icon" alt="gmsyzs">
+              <img src="../../assets/images/gmsyzs.png" class="icon">
             </div>
             <div class="info">
               <div class="label">高锰酸盐指数</div>
@@ -156,7 +158,7 @@
           </li>
           <li>
             <div class="iconBox">
-              <img src="../../assets/images/ad.png" class="icon" alt="ad">
+              <img src="../../assets/images/ad.png" class="icon">
             </div>
             <div class="info">
               <div class="label">氨氮</div>
@@ -165,7 +167,7 @@
           </li>
           <li>
             <div class="iconBox">
-              <img src="../../assets/images/xsyd.png" class="icon" alt="xsyd">
+              <img src="../../assets/images/xsyd.png" class="icon">
             </div>
             <div class="info">
               <div class="label">硝酸盐氮</div>
@@ -173,7 +175,7 @@
             </div>
           </li>
         </ul>
-        <img src="../../assets/images/sydLxhrh.png" alt="sydLxhrh">
+        <img src="../../assets/images/sydLxhrh.png">
       </div>
     </div>
     <div class="cjBtn">
@@ -186,7 +188,7 @@
 import TitleText from '../../components/TitleText'
 import PjjgChart from '../../components/PjjgChart'
 import Slide2 from '../../components/Slide2'
-import BaseFun from '../../assets/js/base'
+// import BaseFun from '../../common/js/base';
 import { mapState } from 'vuex'
 
 export default {
@@ -209,12 +211,16 @@ export default {
         wfzNm: '', // 名称
         whsManNm: '', // 管理单位
         wqGoalNm: '', // 水质目标
-        wsObj: ''// 供水对象
+        wsObj: '', // 供水对象
+        swsNm: '', // 水源地名称
+        wqg: '', // 评价结果
+        rts: ''// 0不达标，1达标
       },
       pjjgData: [{// 评价结果数据
         ASOT: '', // 时间
-        QYZWQGNM: '', // 全因子
-        SYZWQGNM: '', // 双因子
+        // QYZWQGNM: '',//全因子
+        // SYZWQGNM: '',//双因子
+        WQG: '',
         WQGOALNM: ''// 水质目标
       }],
       dmt: [], // 多媒体图片数据
@@ -335,9 +341,9 @@ export default {
     getPjjgData (id) {
       let _this = this
       let datas = {
-        swsCd: id,
-        startTime: BaseFun.formatDate(new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000), 'yyyy-MM'),
-        endTime: BaseFun.formatDate(new Date(), 'yyyy-MM')
+        swsCd: id
+        // startTime: BaseFun.formatDate(new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000), 'yyyy-MM'),
+        // endTime: BaseFun.formatDate(new Date(), 'yyyy-MM')
       }
       this.axios.post(this.moduleConfig.api + 'waterSourceController/getCountSwsData.do', JSON.stringify(datas), {
         headers: {
@@ -350,8 +356,9 @@ export default {
           } else {
             _this.pjjgData = [{// 评价结果数据
               ASOT: '', // 时间
-              QYZWQGNM: '', // 全因子
-              SYZWQGNM: '', // 双因子
+              // QYZWQGNM: '',//全因子
+              // SYZWQGNM: '',//双因子
+              WQG: '',
               WQGOALNM: ''// 水质目标
             }]
           }
@@ -360,8 +367,9 @@ export default {
           console.log(error.message)
           _this.pjjgData = [{// 评价结果数据
             ASOT: '', // 时间
-            QYZWQGNM: '', // 全因子
-            SYZWQGNM: '', // 双因子
+            // QYZWQGNM: '',//全因子
+            // SYZWQGNM: '',//双因子
+            WQG: '',
             WQGOALNM: ''// 水质目标
           }]
         })
@@ -379,7 +387,7 @@ export default {
       })
         .then(response => {
           response.data.data.forEach(item => {
-            //              item.url=_this.moduleConfig.api+'waterSourceController/downloadFile.do?filePath='+item.filePath+'&fileExt='+item.fileExt+'&fileTitle='+encodeURI(item.fileTitle);
+            //              item.url=_this.DSE.serverPath+'waterSourceController/downloadFile.do?filePath='+item.filePath+'&fileExt='+item.fileExt+'&fileTitle='+encodeURI(item.fileTitle);
             //              item.name=item.fileNm;
             item.url = item.filePath
             item.name = item.fileNm
@@ -429,6 +437,17 @@ export default {
     this.getDmtData(this.waterSourceId)
     //      this.getDmtData(440303000001);
     this.getSsjcData(this.waterSourceId)
+    let _this = this
+    this.moduleConfig.timer = setInterval(() => {
+      _this.getSydInfo(this.waterSourceId)
+      _this.getPjjgData(this.waterSourceId)
+      _this.getDmtData(this.waterSourceId)
+      //      _this.getDmtData(440303000001);
+      _this.getSsjcData(this.waterSourceId)
+    }, this.moduleConfig.refreshTime)
+  },
+  destroyed () {
+    clearInterval(this.moduleConfig.timer)
   }
 }
 </script>
@@ -491,19 +510,21 @@ export default {
           margin-top: 15px
 
           .label
-            font-size: 20px
+            font-size: 22px
 
           .value
             font-size: 18px
 
           .wdb
             display: inline-block
-            height: 24px
-            width: 64px
-            line-height: 24px
+            height: 28px
+            /*width: 64px*/
+            padding:0 5px
+            line-height: 28px
             border-radius: 6px
             background-color: #f2a828
             text-align: center
+            font-size: 22px
 
     /*.tickLabel*/
     /*position:absolute*/
@@ -543,7 +564,7 @@ export default {
           position: absolute
           right: 0
           top: 10px
-          height: 38px
+          height: 42px
           border: 1px solid #fff
           box-sizing: border-box
           border-radius: 20px
@@ -553,22 +574,23 @@ export default {
             overflow: hidden
             text-overflow: ellipsis
             white-space: nowrap
-            font-size: 14px
+            font-size: 22px
             display: inline-block
             width: 82px
-            height: 24px
-            line-height: 24px
+            height: 28px
+            line-height: 28px
             margin-right: 2px
+            padding:0 5px
             background-color: #8194b7
             cursor: pointer
 
             &:first-child
-              border-top-left-radius: 11px
-              border-bottom-left-radius: 11px
+              border-top-left-radius: 14px
+              border-bottom-left-radius: 14px
 
             &:last-child
-              border-top-right-radius: 11px
-              border-bottom-right-radius: 11px
+              border-top-right-radius: 14px
+              border-bottom-right-radius: 14px
 
           .active
             background-color: #3971b9
@@ -620,29 +642,32 @@ export default {
             padding: 30px 32px
             text-align: left
             float: left
-            height: 74px
-            width: 219px
+            height: 82px
+            width: 245px
             margin-top: 22px
-            background: url('../../assets/images/tooltipBox2.png') center no-repeat
+            background-image: url('../../assets/images/tooltipBox2.png')
+            background-size: 100% 100%
 
             .tItem
-              font-size: 14px
+              font-size: 22px
 
           .tooltip.left
-            background: url('../../assets/images/tooltipBox2L.png') center no-repeat
+            background: url('../../assets/images/tooltipBox2L.png')
+            background-size: 100% 100%
+            width:332px
 
         .focusBox.gmsy
           top: 217px
-          left: 620px
+          left: 506px
 
         .cyTime
           box-sizing: border-box
           position: absolute
           top: 76px
-          left: 419px
+          left: 404px
           border: 1px solid #fff
-          font-size: 16px
-          width: 330px
+          font-size: 22px
+          width: 360px
           height: 42px
           line-height: 42px
           border-bottom-left-radius: 36px
@@ -685,7 +710,7 @@ export default {
                 font-size: 20px
 
                 .unit
-                  font-size: 16px
+                  font-size: 22px
 
         .infoBoxRight
           position: absolute
@@ -723,7 +748,7 @@ export default {
                 font-size: 20px
 
                 .unit
-                  font-size: 16px
+                  font-size: 22px
 
     .cjBtn
       font-size: 0
@@ -734,7 +759,7 @@ export default {
         height: 86px
         line-height: 122px
         margin-top: 72px
-        font-size: 23px
+        font-size: 22px
         cursor: pointer
         background: url('../../assets/images/btBtn.png') center no-repeat
 

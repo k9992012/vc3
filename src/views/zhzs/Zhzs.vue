@@ -49,10 +49,12 @@
       </div>
     </div>
     <!--<keep-alive>-->
-    <router-view></router-view>
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
     <!--</keep-alive>-->
     <div class="right">
-      <title-text :text="year+'年水功能达标率'"></title-text>
+      <title-text :text="yearSgnq+'年水功能达标率'"></title-text>
       <div class="tabs">
         <span @click="tabsActive(0)" :class="{active:tabsActiveIndex===0}">常规</span>
         <span @click="tabsActive(1)" :class="{active:tabsActiveIndex===1}">国家重要</span>
@@ -78,27 +80,27 @@
       <div class="legend">
         <ul>
           <li>
-            <span style="background-color:#10ffa8" class="colorCircle"></span>
+            <span style="background-color:#0000fe" class="colorCircle"></span>
             <span class="text">I类</span>
           </li>
           <li>
-            <span style="background-color:#5c49ff" class="colorCircle"></span>
+            <span style="background-color:#0bfb00" class="colorCircle"></span>
             <span class="text">Ⅱ类</span>
           </li>
           <li>
-            <span style="background-color:#2099ff" class="colorCircle"></span>
+            <span style="background-color:#ffff00" class="colorCircle"></span>
             <span class="text">Ⅲ类</span>
           </li>
           <li>
-            <span style="background-color:#ffec13" class="colorCircle"></span>
+            <span style="background-color:#fe0000" class="colorCircle"></span>
             <span class="text">Ⅳ类</span>
           </li>
           <li>
-            <span style="background-color:#c35aff" class="colorCircle"></span>
+            <span style="background-color:#ff00fe" class="colorCircle"></span>
             <span class="text">Ⅴ类</span>
           </li>
           <li>
-            <span style="background-color:#ff4c22" class="colorCircle"></span>
+            <span style="background-color:#777777" class="colorCircle"></span>
             <span class="text">劣Ⅴ类</span>
           </li>
         </ul>
@@ -132,6 +134,7 @@ export default {
   data () {
     return {
       year: new Date().getFullYear(), // 当前年份
+      yearSgnq: '--', // 水功能达标率年份
       month: new Date().getMonth() + 1, // 当前月份
       qsh: {// 取水户数据
         WIU: '', // 取水户数量
@@ -158,7 +161,7 @@ export default {
       sydData: { 'total': '', 'Ⅴ': '', 'Ⅲ': '', 'Ⅳ': '', 'Ⅰ': '', 'Ⅱ': '', '劣Ⅴ': '' }, // 水质分类数据
       tabsActiveIndex: 0, // 类型索引
       tabsPointActiveIndex: 0, // 因子索引
-      activeIndex: 0// 地图索引
+      activeIndex: ''// 地图索引
     }
   },
   computed: {
@@ -187,7 +190,7 @@ export default {
 
           break
       }
-      this.mapIndexChange('')
+      this.mapIndexChange(index)
     },
     // 切换常规/197国家重要
     tabsActive (index) {
@@ -281,6 +284,7 @@ export default {
           } else {
             _this.activeData = { TOTAL: _this.sgndbl.TOTAL, STANDARDRATE: _this.sgndbl.QYZFW }
           }
+          _this.yearSgnq = _this.sgndbl.YY
         })
         .catch(error => {
           console.log(error.message)
@@ -311,11 +315,10 @@ export default {
   watch: {
     mapIndex (newVal) {
       switch (newVal) {
-        case 0:
-          this.activeIndex = 0
+        case '':
+          this.activeIndex = ''
           break
       }
-      this.mapIndexChange('')
     }
   },
   mounted () {
@@ -325,14 +328,34 @@ export default {
     this.getSzInfo()
     this.getCgInfo('DSE000000013')
     this.getSydInfo()
+    let _this = this
+    this.moduleConfig.timer = setInterval(() => {
+      _this.getQshInfo()
+      _this.getSlbInfo()
+      _this.getSzInfo()
+      _this.getCgInfo('DSE000000013')
+      _this.getSydInfo()
+    }, this.moduleConfig.refreshTime)
+  },
+  destroyed () {
+    clearInterval(this.moduleConfig.timer)
   }
 }
 </script>
 <style lang="stylus" scoped>
+  .fade-enter-active, .fade-leave-active
+    transition: opacity .5s
+
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+    opacity: 0
+
   .content >>> .sgnqLeft
-    height: 656px
-    top: 85px
-    margin-left: 14px
+    height: 860px
+    top: 35px
+    margin-left: 0
+
+  .content >>> .indexCenter
+    width: 1120px
 
   .right >>> .box .circle .value
     margin-top: 25%
@@ -352,12 +375,14 @@ export default {
       width: 427px
 
       .qshBox
+        width: 406px
+
         li
           box-sizing: border-box
           float: left
-          width: 197px
+          width: 203px
           height: 92px
-          font-size: 18px
+          font-size: 22px
           color: #fff
           padding: 20px 0 0 72px
           text-align: left
@@ -390,9 +415,9 @@ export default {
         padding: 28px 0 0 15px
 
         li
-          width: 56px
+          width: 69px
           float: left
-          margin: 0 30px
+          margin: 0 28px
 
           div
             text-align: center
@@ -405,7 +430,7 @@ export default {
 
           .label
             margin-top: 5px
-            font-size: 18px
+            font-size: 22px
 
       .percentHoop
         float: left
@@ -427,11 +452,11 @@ export default {
             font-size: 40px
 
         .label
-          font-size: 18px
+          font-size: 22px
 
     .right
       position: relative
-      margin: 28px 48px 0 0
+      margin: 28px 21px 0 0
       float: right
 
       .tabs
@@ -448,7 +473,7 @@ export default {
           height: 31px
           line-height: 31px
           color: #fff
-          font-size: 20px
+          font-size: 22px
           background-color: #849ac1
           margin-top: 4px
           cursor: pointer
@@ -487,7 +512,7 @@ export default {
             margin-right: 10px
 
           .text
-            font-size: 16px
+            font-size: 22px
             color: #fff
             height: 18px
             line-height: 18px
@@ -500,7 +525,7 @@ export default {
         position: absolute
         color: #fff
         bottom: 235px
-        right: 120px
+        right: 108px
         font-size: 28px
 
         .value
@@ -512,14 +537,14 @@ export default {
             font-size: 40px
 
         .label
-          font-size: 18px
+          font-size: 22px
 
       .percentHoop
         margin: 30px 0 0 100px
 
       .sgnq
         color: #fff
-        font-size: 18px
+        font-size: 22px
         text-align: left
         text-indent: 114px
         margin-top: 20px
@@ -536,14 +561,14 @@ export default {
         color: #fff
         font-size: 17px
         position: absolute
-        width: 150px
+        width: 180px
         bottom: 35px
-        right: 92px
+        right: 74px
 
         ul
           li
             display: inline-block
-            width: 72px
+            width: 87px
             height: 18px
             line-height: 18px
             text-align: left
@@ -554,6 +579,9 @@ export default {
             width: 13px
             height: 13px
             border-radius: 50%
+
+          .text
+            font-size: 22px
 
     .btMenu
       position: absolute

@@ -29,27 +29,27 @@
     <div class="legend">
       <ul>
         <li>
-          <span style="background-color:#10ffa8" class="colorCircle"></span>
+          <span style="background-color:#0000fe" class="colorCircle"></span>
           <span class="text">I类</span>
         </li>
         <li>
-          <span style="background-color:#5c49ff" class="colorCircle"></span>
+          <span style="background-color:#0bfb00" class="colorCircle"></span>
           <span class="text">Ⅱ类</span>
         </li>
         <li>
-          <span style="background-color:#2099ff" class="colorCircle"></span>
+          <span style="background-color:#ffff00" class="colorCircle"></span>
           <span class="text">Ⅲ类</span>
         </li>
         <li>
-          <span style="background-color:#fff474" class="colorCircle"></span>
+          <span style="background-color:#fe0000" class="colorCircle"></span>
           <span class="text">Ⅳ类</span>
         </li>
         <li>
-          <span style="background-color:#c35aff" class="colorCircle"></span>
+          <span style="background-color:#ff00fe" class="colorCircle"></span>
           <span class="text">Ⅴ类</span>
         </li>
         <li>
-          <span style="background-color:#ff4c22" class="colorCircle"></span>
+          <span style="background-color:#777777" class="colorCircle"></span>
           <span class="text">劣Ⅴ类</span>
         </li>
       </ul>
@@ -107,17 +107,17 @@ export default {
       // 按水质分类设置不同颜色
       switch (val) {
         case 'Ⅰ':
-          return '#10ffa8'
+          return '#0000fe'
         case 'Ⅱ':
-          return '#5c49ff'
+          return '#0bfb00'
         case 'Ⅲ':
-          return '#2099ff'
+          return '#ffff00'
         case 'Ⅳ':
-          return '#ffec13'
+          return '#fe0000'
         case 'Ⅴ':
-          return '#c35aff'
+          return '#ff00fe'
         case '劣Ⅴ':
-          return '#ff4c22'
+          return '#777777'
       }
     },
     // 计算水源地的显示定位(left值)
@@ -163,15 +163,22 @@ export default {
   watch: {},
   mounted () {
     this.getMapData()
+    let _this = this
+    this.moduleConfig.timer = setInterval(() => {
+      _this.getMapData()
+    }, this.moduleConfig.refreshTime)
+  },
+  destroyed () {
+    clearInterval(this.moduleConfig.timer)
   }
 }
 </script>
 <style lang="stylus" scoped>
   .center
     position: relative
-    margin-top: 35px
-    width: 1033px
-    height: 915px
+    margin-top: 59px
+    width: 1122px
+    height: 890px
     background: url('../assets/images/map2.png') center 0 no-repeat
 
     .flashing
@@ -186,7 +193,7 @@ export default {
       width: 954px
       height: 730px
       top: 39px
-      left: 38px
+      left: 84px
 
       .point
         position: absolute

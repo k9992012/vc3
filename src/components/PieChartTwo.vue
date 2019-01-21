@@ -69,7 +69,7 @@ export default {
           formatter: '{b}<br/>{d}%',
           textStyle: {
             color: '#fff',
-            fontSize: 20
+            fontSize: 22
           },
           backgroundColor: 'rgba(0,0,0,.8)',
           borderColor: '#447fc4',

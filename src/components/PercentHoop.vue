@@ -86,5 +86,5 @@ export default {
 
       .label
         margin-top: 5%
-        font-size: 18px
+        font-size: 22px
 </style>

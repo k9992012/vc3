@@ -35,7 +35,7 @@
       </div>
       <title-text style="margin-top:38px" :text="'按水源统计'"></title-text>
       <pie-chart-two class="pieChart" :type="'sy'" :data="syData" :color="['#5f7cf8','#62beff']"></pie-chart-two>
-      <div class="legend" style="top:398px">
+      <div class="legend" style="top:388px">
         <ul>
           <li>
             <span style="background-color:#5f7cf8" class="colorCircle"></span>
@@ -62,18 +62,26 @@
         </ul>
       </div>
     </div>
-    <qsh-center></qsh-center>
+    <index-center></index-center>
     <div class="right">
       <title-text style="margin-top:30px" :text="'按月份(亿m³)'"></title-text>
       <div class="ruler">
         <span style="left:-5px">0</span>
-        <span style="left:121px">{{rulerMax / 2 | dividedWanZero}}</span>
-        <span style="right:-5px">{{rulerMax | dividedWanZero}}</span>
+        <span style="left:118px">{{rulerMax / 2 | dividedWanZero}}</span>
+        <span style="right:-11px">{{rulerMax | dividedWanZero}}</span>
       </div>
       <ul class="monthBox">
         <li v-for="(item,index) in ayf" :key="index" class="clearfix">
           <span class="month">{{12 - index}}月</span>
-          <el-tooltip placement="top">
+          <el-tooltip v-if="item.WW===0" placement="top">
+            <div slot="content">{{year - 2}}年:{{item.ppWW | wanToYiFour}}<br/>{{year - 1}}年:{{item.pWW | wanToYiFour}}
+            </div>
+            <div>
+              <div class="prevPrevYear" :style="{width:ayfVal*item.ppWW+'px'}"></div>
+              <div class="prevYear" :style="{width:ayfVal*item.pWW+'px'}"></div>
+            </div>
+          </el-tooltip>
+          <el-tooltip v-else placement="top">
             <div slot="content">{{year - 1}}年:{{item.pWW | wanToYiFour}}<br/>{{year}}年:{{item.WW | wanToYiFour}}</div>
             <div>
               <div class="prevYear" :style="{width:ayfVal*item.pWW+'px'}"></div>
@@ -83,6 +91,10 @@
         </li>
       </ul>
       <div class="legendBox">
+        <template v-if="ppYearShow">
+          <span class="legend" style="background-color: #5f7cf8"></span>
+          <span class="value">{{year - 2}}年</span>
+        </template>
         <span class="legend"></span>
         <span class="value">{{year - 1}}年</span>
         <span class="legend" style="background-color: #4ccbbb"></span>
@@ -94,11 +106,11 @@
 <script>
 import TitleText from '../../components/TitleText'
 import PieChartTwo from '../../components/PieChartTwo'
-import QshCenter from '../../components/QshCenter'
+import IndexCenter from '../../components/IndexCenter'
 
 export default {
   name: 'qsh',
-  components: { TitleText, PieChartTwo, QshCenter },
+  components: { TitleText, PieChartTwo, IndexCenter },
   data () {
     return {
       year: new Date().getFullYear(),
@@ -108,18 +120,18 @@ export default {
         { DT: new Date().getFullYear() - 2, WW: '' }
       ], // 按年份统计数据
       ayf: [
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' },
-        { pWW: '', WW: '' }
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 },
+        { ppWW: 0, pWW: 0, WW: 0 }
       ], // 按月份统计数据
       ytData: {
         'GenerationWate': '', // 发电
@@ -132,7 +144,8 @@ export default {
         'surfaceWater': '', // 地表水
         'groundWater': ''// 地下水
       },
-      aqhData: []// 按行政区划统计的数据
+      aqhData: [], // 按行政区划统计的数据
+      ppYearShow: false// 前年图例显示/隐藏
     }
   },
   computed: {
@@ -150,6 +163,7 @@ export default {
       this.ayf.forEach(item => {
         valueArr.push(item.WW)
         valueArr.push(item.pWW)
+        valueArr.push(item.ppWW)
       })
       return 262 / Math.max(...valueArr)
     },
@@ -159,6 +173,7 @@ export default {
       this.ayf.forEach(item => {
         valueArr.push(item.WW)
         valueArr.push(item.pWW)
+        valueArr.push(item.ppWW)
       })
       return Math.max(...valueArr)
     }
@@ -232,6 +247,15 @@ export default {
       if (item.DT === year - 1 + '-' + month) {
         ayData[12 - month].pWW = item.WW
       }
+      if (item.DT === year - 2 + '-' + month) {
+        ayData[12 - month].ppWW = item.WW
+      }
+      this.ppYearShow = false
+      this.ayf.forEach(item => {
+        if (item.WW === 0 || !item.WW) {
+          this.ppYearShow = true
+        }
+      })
     },
     // 请求按月份统计取水量数据
     getAyInfo () {
@@ -243,18 +267,18 @@ export default {
       })
         .then(response => {
           let ayData = [
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 },
-            { pWW: 0, WW: 0 }
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 },
+            { ppWW: 0, pWW: 0, WW: 0 }
           ]
           response.data.forEach(item => {
             for (let i = 12; i > 0; i--) {
@@ -280,6 +304,16 @@ export default {
     this.getSyInfo()
     this.getAnInfo()
     this.getAyInfo()
+    let _this = this
+    this.moduleConfig.timer = setInterval(() => {
+      _this.getYtInfo()
+      _this.getSyInfo()
+      _this.getAnInfo()
+      _this.getAyInfo()
+    }, this.moduleConfig.refreshTime)
+  },
+  destroyed () {
+    clearInterval(this.moduleConfig.timer)
   }
 }
 </script>
@@ -305,18 +339,18 @@ export default {
 
       .legend
         color: #fff
-        font-size: 17px
+        font-size: 22px
         position: absolute
         width: 150px
-        top: 77px
+        top: 56px
         right: 20px
 
         ul
           li
             display: inline-block
-            width: 178px
-            height: 18px
-            line-height: 18px
+            width: 185px
+            height: 23px
+            line-height: 23px
             text-align: left
             margin-bottom: 13px
 
@@ -357,9 +391,9 @@ export default {
 
     .right
       float: right
-      width: 412px
+      width: 393px
       color: #fff
-      font-size: 18px
+      font-size: 22px
       position: relative
       margin: 28px 0 0 0
 
@@ -397,6 +431,12 @@ export default {
               background-color: #1a84e7
               margin-bottom: 4px
 
+            .prevPrevYear
+              /*width: 262px*/
+              height: 11px
+              background-color: #5f7cf8
+              margin-bottom: 4px
+
             .year
               /*width: 262px*/
               height: 11px
@@ -405,8 +445,8 @@ export default {
       .legendBox
         height: 20px
         line-height: 20px
-        margin: 40px 0 0 62px
-        text-align: left
+        margin: 40px 0 0 0
+        text-align: center
 
         .legend
           display: inline-block
@@ -415,5 +455,5 @@ export default {
           background-color: #1a84e7
 
         .value
-          margin-right: 35px
+          margin-right: 15px
 </style>

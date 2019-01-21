@@ -15,21 +15,19 @@ export default {
     chartData () {
       let chartData = {
         tm: [], // 时间
-        // qyz: [],//全因子
-        // syz: [],//双因子
-        wqg: [],
-        mb: this.data[0].WQGOALNM, // 水质目标
+        qyz: [], // 全因子
+        syz: [], // 双因子
+        mb: this.data[0].WFZWQT, // 水质目标
         mbVal: null// 目标对应数值
       }
       let _this = this
       // 目标数值转化
       this.data.forEach(item => {
-        // _this.formatAndPush(item.QYZWQGNM, chartData.qyz);
-        // _this.formatAndPush(item.SYZWQGNM, chartData.syz);
-        _this.formatAndPush(item.WQG, chartData.wqg)
+        _this.formatAndPush(item.QYZWQGNM, chartData.qyz)
+        _this.formatAndPush(item.SYZWQGNM, chartData.syz)
         chartData.tm.push(item.ASOT)
       })
-      switch (this.data[0].WQGOALNM) {
+      switch (this.data[0].WFZWQT) {
         case 'Ⅰ':
           chartData.mbVal = 1
           break
@@ -98,8 +96,7 @@ export default {
       let myChart = echarts.init(this.$refs.main)
       myChart.clear()
       let _this = this
-      // let colors = ['#5daf62', '#3d85de', '#7054e5'];
-      let colors = ['#5daf62', '#7054e5']
+      let colors = ['#5daf62', '#3d85de', '#7054e5']
       let option = {
         color: colors,
         grid: {
@@ -118,19 +115,16 @@ export default {
             fontSize: 22
           },
           formatter (val) {
-            // let qyz = _this.formatData(val[0].value);
-            // let syz = _this.formatData(val[1].value);
-            let wqg = _this.formatData(val[0].value)
-            // return val[0].axisValue + '<br>' + '全因子:' + qyz + '<br>' + '双因子:' + syz;
-            return val[0].axisValue + '<br>' + '评价结果:' + wqg
+            let qyz = _this.formatData(val[0].value)
+            let syz = _this.formatData(val[1].value)
+            return val[0].axisValue + '<br>' + '全因子:' + qyz + '<br>' + '双因子:' + syz
           }
         },
         legend: {
           //            data: ['全因子', '双因子'],
           data: [
-            // {name: '全因子', icon: 'rect'},
-            // {name: '双因子', icon: 'rect'},
-            { name: '评价结果', icon: 'rect' },
+            { name: '全因子', icon: 'rect' },
+            { name: '双因子', icon: 'rect' },
             { name: '水质目标', icon: 'rect' }
           ],
           bottom: 0,
@@ -192,16 +186,14 @@ export default {
         ],
         series: [
           {
-            // name: '全因子',
-            name: '评价结果',
+            name: '全因子',
             type: 'line',
             areaStyle: {
               opacity: 0.2
             },
             symbol: 'none',
             smooth: true,
-            // data: this.chartData.qyz,
-            data: this.chartData.wqg,
+            data: this.chartData.qyz,
             markLine: {
               lineStyle: {
                 color: '#7054e5',
@@ -226,16 +218,16 @@ export default {
               ]
             }
           },
-          // {
-          //   name: '双因子',
-          //   type: 'line',
-          //   areaStyle: {
-          //     opacity: .2
-          //   },
-          //   symbol: 'none',
-          //   smooth: true,
-          //   data: this.chartData.syz
-          // },
+          {
+            name: '双因子',
+            type: 'line',
+            areaStyle: {
+              opacity: 0.2
+            },
+            symbol: 'none',
+            smooth: true,
+            data: this.chartData.syz
+          },
           {
             name: '水质目标',
             type: 'line',

@@ -8,14 +8,14 @@
       <polygon @mouseover="over" @mouseout="out" class="top"
                :points="`20,${val-1}, 30,${val-9}, 30,196, 20,204`" :style="{fill:color[2]}"></polygon>
     </svg>
-    <div v-show="tooltip&&tooltipShow" class="tooltip" :style="{top:val-90+'px'}">
+    <div v-show="tooltip&&tooltipShow" class="tooltip" :style="{top:val-110+'px'}">
       <span class="label">行政区划:</span>
       <span class="value">{{name}}</span>
       <span v-if='!isSz' class="label">监测水量:</span>
       <span v-else class="label">达标率:</span>
       <span v-if='!isSz' class="value">{{this.value | wanToYiTwo}}亿m³</span>
-      <span v-else class="value">{{this.value}}%</span>
-      <img src="../assets/images/arrow1.png" alt="arrow1">
+      <span v-else class="value">{{this.value | nullValue}}%</span>
+      <img src="../assets/images/arrow1.png">
     </div>
   </div>
 </template>
@@ -56,9 +56,9 @@ export default {
     .tooltip
       position: absolute
       z-index: 2
-      left: -61px
-      width: 152px
-      height: 56px
+      left: -105px
+      width: 242px
+      height: 72px
       border-radius: 4px
       color: #fff
       background-color: #3b7ae0
@@ -68,19 +68,19 @@ export default {
 
       span
         color: #fff
-        font-size: 14px
+        font-size: 22px
         float: left
         margin-bottom: 8px
 
       .label
         font-weight: bold
-        width: 66px
+        width: 100px
 
       .value
-        width: 66px
+        width: 122px
 
       img
         position: absolute
-        bottom: -10px
-        left: 65px
+        bottom: -11px
+        left: 109px
 </style>

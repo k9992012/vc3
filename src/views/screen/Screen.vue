@@ -10,21 +10,26 @@
         <li @click="active(4)" :class="{active:activeIndex===4}" class="btn item rightOutSide">水源地</li>
       </ul>
       <!--<keep-alive exclude="qsh-detail">-->
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
       <!--</keep-alive>-->
     </div>
-    <iframe id="earthFrame" style="border:0" class="frame" width="1920px" height="774px" src=""></iframe>
+    <iframe id="earthFrame" ref="earthFrame" style="border:0" class="frame" width="1920px" :height="frameHeight"
+            src=""></iframe>
   </div>
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
+
 export default {
   name: 'screen',
   components: {},
   data () {
     return {
       baseMapSrc: this.moduleConfig.mapPath + '#', // 三维页面基础路径
-      activeIndex: 1// 菜单索引
+      activeIndex: 1, // 菜单索引
+      frameHeight: 452 * 1080 / 628// iframe高度
     }
   },
   computed: {
@@ -39,8 +44,8 @@ export default {
       this.activeIndex = index
       switch (index) {
         case 1:
-          this.mapIndexChange(0)
-          this.slectMenu('index-center', 'Overview')
+          this.mapIndexChange('')
+          this.slectMenu('qsh-center', 'Overview')
           break
         case 2:
           this.slectMenu('qsh', 'waterUser')
@@ -67,7 +72,8 @@ export default {
         params.name = ''
       }
       // 改变三维页面url的hash值
-      document.getElementById('earthFrame').src = this.baseMapSrc + JSON.stringify(params)
+      this.$refs.earthFrame.src = this.baseMapSrc + JSON.stringify(params)
+      // document.getElementById('earthFrame').src = this.baseMapSrc + JSON.stringify(params);
       //        window.frames['earthFrame'].src = this.baseMapSrc+JSON.stringify(params);
     }
   },
@@ -94,18 +100,24 @@ export default {
     //   'random': Math.random()
     // };
     // document.getElementById('earthFrame').src = this.baseMapSrc + JSON.stringify(params);
-    this.slectMenu('index-center', 'Overview')
-    //      transform:scaleY(0.5815)
-    //      position:absolute
-    //      top:-226px
+    this.slectMenu('qsh-center', 'Overview')
+    // transform: scaleY(628 / 1080)
+    // position: absolute
+    // top: -(1080/2px - 628/2px)
   }
 }
 </script>
 <style lang="stylus" scoped>
+  .fade-enter-active, .fade-leave-active
+    transition: opacity .5s
+
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+    opacity: 0
+
   .mainBox
-    transform: scaleY(0.5815)
+    transform: scaleY(628 / 1080)
     position: absolute
-    top: -226px
+    top: -((1080 - 628) / 2px)
     width: 1920px
     height: 1080px
     text-align: center
@@ -139,7 +151,7 @@ export default {
           font-size: 32px
           width: 260px
           height: 103px
-          line-height: 105px
+          line-height: 103px
           cursor: pointer
 
         .leftInSide

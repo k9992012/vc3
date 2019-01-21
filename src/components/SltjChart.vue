@@ -41,14 +41,17 @@ export default {
         color: colors,
         grid: {
           right: 0,
-          bottom: 60,
-          left: 90,
-          top: 10
+          bottom: 90,
+          left: 150,
+          top: 12
         },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
             type: 'none'
+          },
+          textStyle: {
+            fontSize: 22
           }
         },
         legend: {
@@ -56,7 +59,8 @@ export default {
           bottom: 0,
           itemGap: 30,
           textStyle: {
-            color: '#fff'
+            color: '#fff',
+            fontSize: 22
           },
           itemWidth: 26,
           itemHeight: 10
@@ -73,7 +77,8 @@ export default {
               }
             },
             axisLabel: {
-              color: '#fff'
+              color: '#fff',
+              fontSize: 22
             },
             //              data: ['2017-10', '2017-12', '2018-02', '2018-04', '2018-06', '2018-08', '2018-10']
             data: xData
@@ -96,7 +101,8 @@ export default {
             },
             axisLabel: {
               formatter: '{value} m³',
-              color: '#fff'
+              color: '#fff',
+              fontSize: 22
             }
           }
         ],

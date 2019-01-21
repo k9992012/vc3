@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    {{text}}
+    {{text|nullValue}}
 
   </div>
 </template>

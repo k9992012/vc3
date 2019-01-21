@@ -23,7 +23,7 @@ export default {
           formatter: '{b}<br/>{c}个&nbsp;&nbsp;{d}%',
           textStyle: {
             color: '#fff',
-            fontSize: 20
+            fontSize: 22
           },
           backgroundColor: 'rgba(0,0,0,.8)',
           borderColor: '#447fc4',
@@ -77,7 +77,7 @@ export default {
             ]
           }
         ],
-        color: ['#10ffa8', '#5c49ff', '#2099ff', '#ffec13', '#c35aff', '#ff4c22']
+        color: ['#0000fe', '#0bfb00', '#ffff00', '#fe0000', '#ff00fe', '#777777']
       }
       myChart.setOption(option)
     }

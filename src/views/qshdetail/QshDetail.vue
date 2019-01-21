@@ -51,7 +51,7 @@
         <slide :data="dmt" v-show="hdbxShow&&slideShow"></slide>
         <slide2 :data="dmt" v-show="!hdbxShow&&slideShow"></slide2>
       </div>
-      <div v-show="hdbxShow" class="xcjkt" v-viewer>
+      <div v-show="hdbxShow" class="xcjkt">
         <title-text :text="'现场监控图'"></title-text>
         <!--<img :src="xcjk[0].url">-->
         <!--<img src="../../assets/images/waterUser_bx/北兴水厂1.jpg"/>-->
@@ -59,7 +59,12 @@
         <!--<img :src="xcjk[1].url">-->
         <!--<img :src="xcjk[2].url">-->
         <!--<img :src="xcjk[3].url">-->
-        <img v-for="(item,index) in xcjk" :src="item.url" :key="index" :alt="item.time">
+        <img @click="show(index)" v-for="(item,index) in xcjkSmall" :src="item.url" :key="index" :alt="item.time">
+      </div>
+      <div v-show="false" v-viewer class="xcjk">
+        <li v-for="(item,index) in xcjk" :key="index">
+          <img :src="item.url" :alt="item.time">
+        </li>
       </div>
       <div v-show="!hdbxShow" class="xcjkt2">
         <title-text :text="'现场监控图'"></title-text>
@@ -92,7 +97,7 @@
             </div>
           </div>
         </div>
-        <img src="../../assets/images/qshHdbxzlsc.png" alt="qshHdbxzlsc">
+        <img src="../../assets/images/qshHdbxzlsc.png">
       </div>
     </div>
     <div class="cjBtn">
@@ -173,6 +178,16 @@ export default {
     }
   },
   computed: {
+    // 缩略图对应url
+    xcjkSmall () {
+      let _this = this
+      return this.xcjk.map(function (item) {
+        return {
+          url: `${_this.moduleConfig.api}wiuOnlinMonit/getThumbnailImg.do?url=${item.url}&width=340&height=180`.replace(/\\/g, '/'),
+          name: item.name
+        }
+      })
+    },
     // store中取水户id
     ...mapState(['waterUserId']),
     // 取水户名称
@@ -191,6 +206,12 @@ export default {
     }
   },
   methods: {
+    // 显示viewer并切换到指定图片
+    show (index) {
+      const viewer = this.$el.querySelector('.xcjk').$viewer
+      viewer.show()
+      viewer.view(index)
+    },
     // 测点切换
     active (index) {
       this.activeIndex = index
@@ -396,6 +417,18 @@ export default {
     //      this.getDmtData('595839023001');
     this.getXcjkData(this.waterUserId)
     this.getCdslData(this.waterUserId)
+    let _this = this
+    this.moduleConfig.timer = setInterval(() => {
+      _this.getQshInfo(this.waterUserId)
+      _this.getSltjData(this.waterUserId)
+      _this.getDmtData(this.waterUserId)
+      //      _this.getDmtData('595839023001');
+      _this.getXcjkData(this.waterUserId)
+      _this.getCdslData(this.waterUserId)
+    }, this.moduleConfig.refreshTime)
+  },
+  destroyed () {
+    clearInterval(this.moduleConfig.timer)
   }
 }
 </script>
@@ -458,17 +491,17 @@ export default {
           margin-top: 15px
 
           .label
-            font-size: 20px
+            font-size: 22px
 
           .value
             font-size: 18px
 
           .xinfa
             padding: 0 10px
-            height: 25px
-            line-height: 25px
+            height: 28px
+            line-height: 28px
             display: inline-block
-            font-size: 16px
+            font-size: 22px
             border-radius: 6px
             background-color: #288ce9
             position: relative
@@ -529,8 +562,8 @@ export default {
         span
           position: absolute
           bottom: 8px
-          right: 95px
-          font-size: 16px
+          right: 67px
+          font-size: 22px
 
       .xcjkt2
         width: 1172px
@@ -570,7 +603,7 @@ export default {
           position: absolute
           right: 0
           top: 10px
-          height: 38px
+          height: 42px
           border: 1px solid #fff
           box-sizing: border-box
           border-radius: 20px
@@ -580,22 +613,22 @@ export default {
             overflow: hidden
             text-overflow: ellipsis
             white-space: nowrap
-            font-size: 14px
+            font-size: 22px
             display: inline-block
             width: 82px
-            height: 24px
-            line-height: 24px
+            height: 28px
+            line-height: 28px
             margin-right: 2px
             background-color: #8194b7
             cursor: pointer
 
             &:first-child
-              border-top-left-radius: 11px
-              border-bottom-left-radius: 11px
+              border-top-left-radius: 14px
+              border-bottom-left-radius: 14px
 
             &:last-child
-              border-top-right-radius: 11px
-              border-bottom-right-radius: 11px
+              border-top-right-radius: 14px
+              border-bottom-right-radius: 14px
 
           .active
             background-color: #3971b9
@@ -625,18 +658,19 @@ export default {
             padding: 30px 35px
             text-align: left
             float: left
-            height: 121px
-            width: 287px
-            background: url('../../assets/images/tooltipBox.png') center no-repeat
+            height: 136px
+            width: 344px
+            background-image: url('../../assets/images/tooltipBox.png')
+            background-size: 100% 100%
 
             .title
-              font-size: 18px
+              font-size: 22px
               overflow: hidden
               text-overflow: ellipsis
               white-space: nowrap
 
             .tItem
-              font-size: 15px
+              font-size: 22px
               margin-top: 6px
 
     .cjBtn
@@ -648,7 +682,7 @@ export default {
         height: 86px
         line-height: 122px
         margin-top: 72px
-        font-size: 23px
+        font-size: 22px
         cursor: pointer
         background: url('../../assets/images/btBtn.png') center no-repeat
 

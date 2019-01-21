@@ -2,9 +2,12 @@
   <div class="xxBox">
     <span class="prev" @click="prev"></span>
     <div class="slideBox">
-      <ul ref="imgList" :style="{width:ulWidth,left:0}" v-viewer>
-        <li v-for="(item,index) in data" :key="index">
-          <img :src="item.url" :alt="item.name">
+      <ul v-if="isShow" ref="imgList" :style="{width:ulWidth,left:0}">
+        <!--<li v-for="(item,index) in data" :key="index">-->
+        <!--<img :src="item.url" :alt="item.name">-->
+        <!--</li>-->
+        <li v-for="(item,index) in dataSmall" :key="index">
+          <img @click="show(index)" :src="item.url" :alt="item.name">
         </li>
         <!--<li v-if="waterSourceId==='440607000001'">-->
         <!--<img src="../../assets/images/waterSrc_mk/2.jpg" alt="2.jpg"/>-->
@@ -27,6 +30,11 @@
       </ul>
     </div>
     <span class="next" @click="next"></span>
+    <div v-show="false" v-viewer class="images">
+      <li v-for="(item,index) in data" :key="index">
+        <img :src="item.url" :alt="item.name">
+      </li>
+    </div>
   </div>
 </template>
 <script>
@@ -37,18 +45,36 @@ export default {
   components: {},
   props: ['data'],
   data () {
-    return {}
+    return {
+      isShow: true
+    }
   },
   computed: {
     // 计算ul元素宽度
     ulWidth () {
       return this.data.length * 238 + 'px'
       //        return 1428+'px';
+    },
+    // 缩略图对应url
+    dataSmall () {
+      let _this = this
+      return this.data.map(function (item) {
+        return {
+          url: encodeURI(encodeURI(encodeURI(`${_this.moduleConfig.api}wiuOnlinMonit/getThumbnailImg.do?url=${item.url}&width=288&height=175`))),
+          name: item.name
+        }
+      })
     }
     // store中水源地id
     // ...mapState(['waterSourceId'])
   },
   methods: {
+    // 显示viewer并切换到指定图片
+    show (index) {
+      const viewer = this.$el.querySelector('.images').$viewer
+      viewer.show()
+      viewer.view(index)
+    },
     // 向左滑动
     prev () {
       let leftNow = parseInt(this.$refs.imgList.style.left)
@@ -69,7 +95,15 @@ export default {
       }
     }
   },
-  watch: {},
+  watch: {
+    data () {
+      let _this = this
+      this.isShow = false
+      this.$nextTick(() => {
+        _this.isShow = true
+      })
+    }
+  },
   mounted () {
 
   }

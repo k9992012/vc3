@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="center indexCenter">
     <div class="redPoint"></div>
     <flashing @click.native="toQshDetail" class="flashing"></flashing>
     <div class="jcsl">
@@ -92,6 +92,13 @@ export default {
   mounted () {
     this.getQslInfo()
     this.refreshTime()
+    let _this = this
+    this.moduleConfig.timer = setInterval(() => {
+      _this.getQslInfo()
+    }, this.moduleConfig.refreshTime)
+  },
+  destroyed () {
+    clearInterval(this.moduleConfig.timer)
   }
 }
 </script>
@@ -99,22 +106,22 @@ export default {
   .center
     position: relative
     margin-top: 35px
-    width: 1033px
+    width: 1079px
     height: 915px
     background: url('../assets/images/map.png') center 0 no-repeat
 
     .redPoint
       position: absolute
-      top: 325px
-      left: 646px
+      top: 341px
+      left: 669px
       width: 11px
       height: 15px
       background: url('../assets/images/red.png') center no-repeat
 
     .flashing
       position: absolute
-      top: 278px
-      left: 594px
+      top: 292px
+      left: 617px
       cursor: pointer
 
     .jcsl

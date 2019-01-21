@@ -2,9 +2,12 @@
   <div class="xxBox">
     <span class="prev" @click="prev"></span>
     <div class="slideBox">
-      <ul ref="imgList" :style="{width:ulWidth,left:0}" v-viewer>
-        <li v-for="(item,index) in data" :key="index">
-          <img :src="item.url" :alt="item.name">
+      <ul ref="imgList" :style="{width:ulWidth,left:0}">
+        <!--<li v-for="(item,index) in data" :key="index">-->
+        <!--<img :src="item.url" :alt="item.name">-->
+        <!--</li>-->
+        <li v-for="(item,index) in dataSmall" :key="index">
+          <img @click="show(index)" :src="item.url" :alt="item.name">
         </li>
         <!--<li v-if="waterUserId==='891209472001'">-->
         <!--<img src="../../assets/images/waterUser_bx/北兴水厂1.jpg" alt="北兴水厂1.jpg"/>-->
@@ -45,6 +48,11 @@
       </ul>
     </div>
     <span class="next" @click="next"></span>
+    <div v-show="false" v-viewer class="images">
+      <li v-for="(item,index) in data" :key="index">
+        <img :src="item.url" :alt="item.name">
+      </li>
+    </div>
   </div>
 </template>
 <script>
@@ -62,11 +70,27 @@ export default {
     ulWidth () {
       return this.data.length * 238 + 'px'
       // return 2856 + 'px';
+    },
+    // 缩略图对应url
+    dataSmall () {
+      let _this = this
+      return this.data.map(function (item) {
+        return {
+          url: encodeURI(encodeURI(encodeURI(`${_this.moduleConfig.api}wiuOnlinMonit/getThumbnailImg.do?url=${item.url}&width=288&height=175`))),
+          name: item.name
+        }
+      })
     }
     // store中取水户id
     // ...mapState(['waterUserId'])
   },
   methods: {
+    // 显示viewer并切换到指定图片
+    show (index) {
+      const viewer = this.$el.querySelector('.images').$viewer
+      viewer.show()
+      viewer.view(index)
+    },
     // 向左滑动
     prev () {
       let leftNow = parseInt(this.$refs.imgList.style.left)
