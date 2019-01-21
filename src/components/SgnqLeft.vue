@@ -91,7 +91,7 @@ export default {
     // 请求按行政区划统计的取水户数据
     getMapInfo () {
       let _this = this
-      this.axios.post(/api/ + 'wiuOnlinMonit/getQshStatByDivision.do', {
+      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/getQshStatByDivision.do', {
         headers: {
           'Content-Type': 'application/json'
         }

@@ -10,12 +10,14 @@ import Viewer from 'v-viewer'
 import VueAxios from 'vue-axios'
 import App from './App.vue'
 import filters from './assets/js/filters'
+import moduleConfig from '../src/assets/js/moduleConfig'
 
 Vue.config.productionTip = false
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 Vue.use(Viewer)
+Vue.prototype.moduleConfig = moduleConfig
 Vue.use(VueAxios, axios)
 Vue.use(ELEMENT)
 new Vue({

@@ -59,7 +59,6 @@
 <script>
 import Flashing from './Flashing'
 import { mapMutations } from 'vuex'
-import BaseFun from '../assets/js/base'
 
 export default {
   name: 'syd-center',
@@ -67,7 +66,7 @@ export default {
   props: [],
   data () {
     return {
-      baseMapSrc: BaseFun.mapPath + '#', // 三维图的基础路径
+      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维图的基础路径
       // 广东省经纬度范围
       lttdMin: 20.2239426998,
       lttdMax: 25.5166667000,
@@ -132,7 +131,7 @@ export default {
     // 请求水源地地图数据
     getMapData () {
       let _this = this
-      this.axios.post(/api/ + 'waterSourceController/getSwsMapData.do', {
+      this.axios.post(this.moduleConfig.api + 'waterSourceController/getSwsMapData.do', {
         headers: {
           'Content-Type': 'application/json'
         }

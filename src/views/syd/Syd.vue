@@ -136,7 +136,7 @@ export default {
     // 请求水源地统计数据
     getSydInfo () {
       let _this = this
-      this.axios.post(/api/ + 'waterSourceController/getWrWsList.do', {
+      this.axios.post(this.moduleConfig.api + 'waterSourceController/getWrWsList.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -151,7 +151,7 @@ export default {
     // 请求按地市数据
     getAdsData () {
       let _this = this
-      this.axios.post(/api/ + 'waterSourceController/getQualified.do', {
+      this.axios.post(this.moduleConfig.api + 'waterSourceController/getQualified.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -166,7 +166,7 @@ export default {
     // 请求按合格数量类别统计数据
     getAhgsllbData () {
       let _this = this
-      this.axios.post(/api/ + 'waterSourceController/getNumData.do', {
+      this.axios.post(this.moduleConfig.api + 'waterSourceController/getNumData.do', {
         headers: {
           'Content-Type': 'application/json'
         }

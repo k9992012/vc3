@@ -116,7 +116,7 @@ export default {
     return {
       hdbxShow: true, // 判断当前取水户是否为花都北兴自来水厂
       slideShow: true, // 判断显示哪个多媒体图片轮播组件
-      baseMapSrc: BaseFun.mapPath + '#', // 三维图的基础路径
+      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维图的基础路径
       year: new Date().getFullYear(), // 当前年份
       time: BaseFun.formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss'), // 当前时间
       qshInfo: {
@@ -245,7 +245,7 @@ export default {
       //        let datas = {
       //          vwpccd: id
       //        };
-      this.axios.get(/api/ + 'wiuOnlinMonit/getVWpcInfoAll.do?vwpccd=' + id, {
+      this.axios.get(this.moduleConfig.api + 'wiuOnlinMonit/getVWpcInfoAll.do?vwpccd=' + id, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -285,7 +285,7 @@ export default {
         startTime: BaseFun.formatDate(new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd hh:mm:ss'),
         endTime: BaseFun.formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')
       }
-      this.axios.post(/api/ + 'wiuOnlinMonit/jcdData.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/jcdData.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -303,7 +303,7 @@ export default {
       let datas = {
         vwpccd: id
       }
-      this.axios.post(/api/ + 'wiuOnlinMonit/getStaticImgURL.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/getStaticImgURL.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -325,7 +325,7 @@ export default {
       let datas = {
         vwpccd: id
       }
-      this.axios.post(/api/ + 'wiuOnlinMonit/jdcImgPath.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/jdcImgPath.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -349,7 +349,7 @@ export default {
       let datas = {
         vwpccd: id
       }
-      this.axios.post(/api/ + 'wiuOnlinMonit/getOriginalWw.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/getOriginalWw.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }

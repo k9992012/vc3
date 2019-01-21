@@ -25,7 +25,7 @@ export default {
   props: [],
   data () {
     return {
-      baseMapSrc: BaseFun.mapPath + '#', // 三维图的基础路径
+      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维图的基础路径
       qsl: {
         DAYW: ''// 监测水量
       },
@@ -69,7 +69,7 @@ export default {
       let datas = {
         V_WPC_CD: '891209472001'
       }
-      this.axios.post(/api/ + 'SsjkController/getSsjkGkxx.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'SsjkController/getSsjkGkxx.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }

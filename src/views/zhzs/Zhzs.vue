@@ -212,7 +212,7 @@ export default {
     // 请求取水户数据
     getQshInfo () {
       let _this = this
-      this.axios.post('/api/wiuOnlinMonit/getWiuOnlineSta.do', {
+      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/getWiuOnlineSta.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -238,7 +238,7 @@ export default {
       let datas = {
         selectTime: _year + '-' + _month
       }
-      this.axios.post(/api/ + 'dataExchangeController/getCountServiceMonitoringData.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'dataExchangeController/getCountServiceMonitoringData.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -253,7 +253,7 @@ export default {
     // 请求水质数据
     getSzInfo () {
       let _this = this
-      this.axios.post(/api/ + 'WqStationAction/getWqStationConuts.do', {
+      this.axios.post(this.moduleConfig.api + 'WqStationAction/getWqStationConuts.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -269,7 +269,7 @@ export default {
     getCgInfo (groId) {
       let _this = this
       let datas = { groId }
-      this.axios.post(/api/ + 'waterFunctionZoneController/getWaterFunctionZone.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'waterFunctionZoneController/getWaterFunctionZone.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -289,7 +289,7 @@ export default {
     // 请求水源地数据
     getSydInfo () {
       let _this = this
-      this.axios.post(/api/ + 'waterSourceController/getWrWsList.do', {
+      this.axios.post(this.moduleConfig.api + 'waterSourceController/getWrWsList.do', {
         headers: {
           'Content-Type': 'application/json'
         }

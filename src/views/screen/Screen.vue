@@ -18,13 +18,12 @@
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
-import BaseFun from '../../assets/js/base'
 export default {
   name: 'screen',
   components: {},
   data () {
     return {
-      baseMapSrc: BaseFun.mapPath + '#', // 三维页面基础路径
+      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维页面基础路径
       activeIndex: 1// 菜单索引
     }
   },

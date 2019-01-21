@@ -168,7 +168,7 @@ export default {
     // 请求按取水用途统计查询的数据
     getYtInfo () {
       let _this = this
-      this.axios.post(/api/ + 'SsjkController/getWaterIntake.do', {
+      this.axios.post(this.moduleConfig.api + 'SsjkController/getWaterIntake.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -183,7 +183,7 @@ export default {
     // 请求按取水水源统计查询的数据
     getSyInfo () {
       let _this = this
-      this.axios.post(/api/ + 'SsjkController/getSourceOfWaterg.do', {
+      this.axios.post(this.moduleConfig.api + 'SsjkController/getSourceOfWaterg.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -198,7 +198,7 @@ export default {
     // 请求按年份统计取水量数据
     getAnInfo () {
       let _this = this
-      this.axios.post(/api/ + 'SsjkController/getAnnualWaterIntake.do', {
+      this.axios.post(this.moduleConfig.api + 'SsjkController/getAnnualWaterIntake.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -236,7 +236,7 @@ export default {
     // 请求按月份统计取水量数据
     getAyInfo () {
       let _this = this
-      this.axios.post(/api/ + 'SsjkController/getMonthlyWaterIntake.do', {
+      this.axios.post(this.moduleConfig.api + 'SsjkController/getMonthlyWaterIntake.do', {
         headers: {
           'Content-Type': 'application/json'
         }

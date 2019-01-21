@@ -228,7 +228,7 @@ export default {
     getCgInfo (groId) {
       let _this = this
       let datas = { groId }
-      this.axios.post(/api/ + 'waterFunctionZoneController/getWaterFunctionZone.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'waterFunctionZoneController/getWaterFunctionZone.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }

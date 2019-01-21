@@ -1,3 +1,4 @@
+const commonConfig = require('./public/commonConfig')
 module.exports = {
   // 基本路径(设置为'./'后，所有的资源都会被链接为相对路径，打出来的包可以被部署在任意路径)
   baseUrl: './',
@@ -44,22 +45,13 @@ module.exports = {
   // // dll: false,
   // // PWA 插件相关配置
   // // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-  // pwa: {},
   devServer: {
     // 设置主机地址
     host: '10.100.9.43',
     // 设置默认端口
     port: 8080,
     // 设置代理
-    proxy: {
-      '/api': {
-        target: 'http://10.100.50.144:8081', // 代理接口
-        changeOrigin: true, // 是否不同ip
-        pathRewrite: {
-          '^/api': '/MonitoringDisplay' // 代理的路径
-        }
-      }
-    }
+    proxy: commonConfig.proxy
   },
   // 第三方插件配置
   pluginOptions: {

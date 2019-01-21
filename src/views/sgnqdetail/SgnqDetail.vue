@@ -97,7 +97,7 @@ export default {
   components: { TitleText, PjjgChart, Slide2 },
   data () {
     return {
-      baseMapSrc: BaseFun.mapPath + '#', // 三维页面基础路径
+      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维页面基础路径
       slideShow: true, // 是否显示多媒体轮播图组件
       sydInfo: {// 基本信息数据
         asot: '',
@@ -222,7 +222,7 @@ export default {
       let datas = {
         swsCd: id
       }
-      this.axios.post(/api/ + 'waterSourceController/getWaterSourceInfo.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'waterSourceController/getWaterSourceInfo.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -242,7 +242,7 @@ export default {
         startTime: BaseFun.formatDate(new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000), 'yyyy-MM'),
         endTime: BaseFun.formatDate(new Date(), 'yyyy-MM')
       }
-      this.axios.post(/api/ + 'waterSourceController/getCountSwsData.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'waterSourceController/getCountSwsData.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -260,14 +260,14 @@ export default {
       let datas = {
         swsCd: id
       }
-      this.axios.post(/api/ + 'waterSourceController/getMediaByWsCd.do', JSON.stringify(datas), {
+      this.axios.post(this.moduleConfig.api + 'waterSourceController/getMediaByWsCd.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
       })
         .then(response => {
           response.data.data.forEach(item => {
-            item.url = /api/ + 'waterSourceController/downloadFile.do?filePath=' + item.filePath + '&fileExt=' + item.fileExt + '&fileTitle=' + encodeURI(item.fileTitle)
+            item.url = this.moduleConfig.api + 'waterSourceController/downloadFile.do?filePath=' + item.filePath + '&fileExt=' + item.fileExt + '&fileTitle=' + encodeURI(item.fileTitle)
             item.name = item.fileNm
           })
           _this.dmt = response.data.data

@@ -44,7 +44,6 @@ const BaseFun = {
       let value2 = obj2[property]
       return value1 - value2 // 升序
     }
-  },
-  mapPath: 'http://10.100.9.168/gdswearth/'
+  }
 }
 export default BaseFun
