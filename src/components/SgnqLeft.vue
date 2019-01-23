@@ -109,7 +109,7 @@ export default {
       let datas = {
         tp: this.tp
       }
-      this.axios.post(this.moduleConfig.api + 'waterFunctionZoneController/getWfzMapData.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterFunctionZoneController/getWfzMapData.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -157,12 +157,12 @@ export default {
   mounted () {
     this.getMapInfo()
     let _this = this
-    this.moduleConfig.timer = setInterval(() => {
+    this.baseConfig.timer = setInterval(() => {
       _this.getMapInfo()
-    }, this.moduleConfig.refreshTime)
+    }, this.baseConfig.refreshTime)
   },
   destroyed () {
-    clearInterval(this.moduleConfig.timer)
+    clearInterval(this.baseConfig.timer)
   }
 }
 </script>

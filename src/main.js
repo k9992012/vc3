@@ -10,18 +10,32 @@ import Viewer from 'v-viewer'
 import VueAxios from 'vue-axios'
 import App from './App.vue'
 import filters from './assets/js/filters'
-import moduleConfig from '../src/assets/js/moduleConfig'
 
 Vue.config.productionTip = false
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 Vue.use(Viewer)
-Vue.prototype.moduleConfig = moduleConfig
 Vue.use(VueAxios, axios)
 Vue.use(ELEMENT)
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+
+function getConfig () {
+  axios.get('./baseConfig.json').then((result) => {
+    let config = result.data
+    Vue.prototype.baseConfig = {
+      api: `/${config.serverName}/`,
+      mapPath: config.mapPath,
+      refreshTime: config.refreshTime,
+      timer: config.timer
+    }
+    new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount('#app')
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+
+getConfig()

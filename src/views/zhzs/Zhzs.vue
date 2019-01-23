@@ -215,7 +215,7 @@ export default {
     // 请求取水户数据
     getQshInfo () {
       let _this = this
-      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/getWiuOnlineSta.do', {
+      this.axios.post(this.baseConfig.api + 'wiuOnlinMonit/getWiuOnlineSta.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -241,7 +241,7 @@ export default {
       let datas = {
         selectTime: _year + '-' + _month
       }
-      this.axios.post(this.moduleConfig.api + 'dataExchangeController/getCountServiceMonitoringData.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'dataExchangeController/getCountServiceMonitoringData.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -256,7 +256,7 @@ export default {
     // 请求水质数据
     getSzInfo () {
       let _this = this
-      this.axios.post(this.moduleConfig.api + 'WqStationAction/getWqStationConuts.do', {
+      this.axios.post(this.baseConfig.api + 'WqStationAction/getWqStationConuts.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -272,7 +272,7 @@ export default {
     getCgInfo (groId) {
       let _this = this
       let datas = { groId }
-      this.axios.post(this.moduleConfig.api + 'waterFunctionZoneController/getWaterFunctionZone.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterFunctionZoneController/getWaterFunctionZone.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -293,7 +293,7 @@ export default {
     // 请求水源地数据
     getSydInfo () {
       let _this = this
-      this.axios.post(this.moduleConfig.api + 'waterSourceController/getWrWsList.do', {
+      this.axios.post(this.baseConfig.api + 'waterSourceController/getWrWsList.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -329,16 +329,16 @@ export default {
     this.getCgInfo('DSE000000013')
     this.getSydInfo()
     let _this = this
-    this.moduleConfig.timer = setInterval(() => {
+    this.baseConfig.timer = setInterval(() => {
       _this.getQshInfo()
       _this.getSlbInfo()
       _this.getSzInfo()
       _this.getCgInfo('DSE000000013')
       _this.getSydInfo()
-    }, this.moduleConfig.refreshTime)
+    }, this.baseConfig.refreshTime)
   },
   destroyed () {
-    clearInterval(this.moduleConfig.timer)
+    clearInterval(this.baseConfig.timer)
   }
 }
 </script>

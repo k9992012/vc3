@@ -196,7 +196,7 @@ export default {
   components: { TitleText, PjjgChart, Slide2 },
   data () {
     return {
-      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维页面基础路径
+      baseMapSrc: this.baseConfig.mapPath + '#', // 三维页面基础路径
       slideShow: true, // 是否显示多媒体轮播图组件
       sydInfo: {// 基本信息
         asot: '', // 时间
@@ -325,7 +325,7 @@ export default {
       //        let datas = {
       //          swsCd: id
       //        };
-      this.axios.get(this.moduleConfig.api + 'waterSourceController/getWaterSourceInfo.do?swsCd=' + id, {
+      this.axios.get(this.baseConfig.api + 'waterSourceController/getWaterSourceInfo.do?swsCd=' + id, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -345,7 +345,7 @@ export default {
         // startTime: BaseFun.formatDate(new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000), 'yyyy-MM'),
         // endTime: BaseFun.formatDate(new Date(), 'yyyy-MM')
       }
-      this.axios.post(this.moduleConfig.api + 'waterSourceController/getCountSwsData.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterSourceController/getCountSwsData.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -380,7 +380,7 @@ export default {
       let datas = {
         swsCd: id
       }
-      this.axios.post(this.moduleConfig.api + 'waterSourceController/getMediaByWsCd.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterSourceController/getMediaByWsCd.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -408,7 +408,7 @@ export default {
       let datas = {
         swsCd: id
       }
-      this.axios.post(this.moduleConfig.api + 'waterSourceController/getSwsWqData.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterSourceController/getSwsWqData.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -438,16 +438,16 @@ export default {
     //      this.getDmtData(440303000001);
     this.getSsjcData(this.waterSourceId)
     let _this = this
-    this.moduleConfig.timer = setInterval(() => {
+    this.baseConfig.timer = setInterval(() => {
       _this.getSydInfo(this.waterSourceId)
       _this.getPjjgData(this.waterSourceId)
       _this.getDmtData(this.waterSourceId)
       //      _this.getDmtData(440303000001);
       _this.getSsjcData(this.waterSourceId)
-    }, this.moduleConfig.refreshTime)
+    }, this.baseConfig.refreshTime)
   },
   destroyed () {
-    clearInterval(this.moduleConfig.timer)
+    clearInterval(this.baseConfig.timer)
   }
 }
 </script>

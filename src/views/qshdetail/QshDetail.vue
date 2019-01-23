@@ -121,7 +121,7 @@ export default {
     return {
       hdbxShow: true, // 判断当前取水户是否为花都北兴自来水厂
       slideShow: true, // 判断显示哪个多媒体图片轮播组件
-      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维图的基础路径
+      baseMapSrc: this.baseConfig.mapPath + '#', // 三维图的基础路径
       year: new Date().getFullYear(), // 当前年份
       time: BaseFun.formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss'), // 当前时间
       qshInfo: {
@@ -183,7 +183,7 @@ export default {
       let _this = this
       return this.xcjk.map(function (item) {
         return {
-          url: `${_this.moduleConfig.api}wiuOnlinMonit/getThumbnailImg.do?url=${item.url}&width=340&height=180`.replace(/\\/g, '/'),
+          url: `${_this.baseConfig.api}wiuOnlinMonit/getThumbnailImg.do?url=${item.url}&width=340&height=180`.replace(/\\/g, '/'),
           name: item.name
         }
       })
@@ -266,7 +266,7 @@ export default {
       //        let datas = {
       //          vwpccd: id
       //        };
-      this.axios.get(this.moduleConfig.api + 'wiuOnlinMonit/getVWpcInfoAll.do?vwpccd=' + id, {
+      this.axios.get(this.baseConfig.api + 'wiuOnlinMonit/getVWpcInfoAll.do?vwpccd=' + id, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -306,7 +306,7 @@ export default {
         startTime: BaseFun.formatDate(new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd hh:mm:ss'),
         endTime: BaseFun.formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')
       }
-      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/jcdData.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'wiuOnlinMonit/jcdData.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -324,7 +324,7 @@ export default {
       let datas = {
         vwpccd: id
       }
-      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/getStaticImgURL.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'wiuOnlinMonit/getStaticImgURL.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -346,7 +346,7 @@ export default {
       let datas = {
         vwpccd: id
       }
-      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/jdcImgPath.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'wiuOnlinMonit/jdcImgPath.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -370,7 +370,7 @@ export default {
       let datas = {
         vwpccd: id
       }
-      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/getOriginalWw.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'wiuOnlinMonit/getOriginalWw.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -418,17 +418,17 @@ export default {
     this.getXcjkData(this.waterUserId)
     this.getCdslData(this.waterUserId)
     let _this = this
-    this.moduleConfig.timer = setInterval(() => {
+    this.baseConfig.timer = setInterval(() => {
       _this.getQshInfo(this.waterUserId)
       _this.getSltjData(this.waterUserId)
       _this.getDmtData(this.waterUserId)
       //      _this.getDmtData('595839023001');
       _this.getXcjkData(this.waterUserId)
       _this.getCdslData(this.waterUserId)
-    }, this.moduleConfig.refreshTime)
+    }, this.baseConfig.refreshTime)
   },
   destroyed () {
-    clearInterval(this.moduleConfig.timer)
+    clearInterval(this.baseConfig.timer)
   }
 }
 </script>

@@ -233,7 +233,7 @@ export default {
         groId: this.groId,
         tp: this.tp
       }
-      this.axios.post(this.moduleConfig.api + 'waterFunctionZoneController/getWfzAll.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterFunctionZoneController/getWfzAll.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -295,12 +295,12 @@ export default {
     this.refreshTime()
     this.getInfo(true)
     let _this = this
-    this.moduleConfig.timer = setInterval(() => {
+    this.baseConfig.timer = setInterval(() => {
       _this.getInfo()
-    }, this.moduleConfig.refreshTime)
+    }, this.baseConfig.refreshTime)
   },
   destroyed () {
-    clearInterval(this.moduleConfig.timer)
+    clearInterval(this.baseConfig.timer)
   }
 }
 </script>

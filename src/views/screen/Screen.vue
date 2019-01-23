@@ -27,7 +27,7 @@ export default {
   components: {},
   data () {
     return {
-      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维页面基础路径
+      baseMapSrc: this.baseConfig.mapPath + '#', // 三维页面基础路径
       activeIndex: 1, // 菜单索引
       frameHeight: 452 * 1080 / 628// iframe高度
     }

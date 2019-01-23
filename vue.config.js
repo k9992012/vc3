@@ -1,4 +1,3 @@
-const commonConfig = require('./public/commonConfig')
 module.exports = {
   // 基本路径(设置为'./'后，所有的资源都会被链接为相对路径，打出来的包可以被部署在任意路径)
   baseUrl: './',
@@ -51,7 +50,15 @@ module.exports = {
     // 设置默认端口
     port: 8080,
     // 设置代理
-    proxy: commonConfig.proxy
+    proxy: {
+      '/MonitoringDisplayed': {
+        target: 'http://10.100.9.43:8083', // 代理接口
+        changeOrigin: false, // 是否不同ip
+        pathRewrite: {
+          '^/MonitoringDisplayed': '/MonitoringDisplayed' // 代理的路径
+        }
+      }
+    }
   },
   // 第三方插件配置
   pluginOptions: {

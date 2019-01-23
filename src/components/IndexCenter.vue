@@ -25,7 +25,7 @@ export default {
   props: [],
   data () {
     return {
-      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维图的基础路径
+      baseMapSrc: this.baseConfig.mapPath + '#', // 三维图的基础路径
       qsl: {
         DAYW: ''// 监测水量
       },
@@ -69,7 +69,7 @@ export default {
       let datas = {
         V_WPC_CD: '891209472001'
       }
-      this.axios.post(this.moduleConfig.api + 'SsjkController/getSsjkGkxx.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'SsjkController/getSsjkGkxx.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -93,12 +93,12 @@ export default {
     this.getQslInfo()
     this.refreshTime()
     let _this = this
-    this.moduleConfig.timer = setInterval(() => {
+    this.baseConfig.timer = setInterval(() => {
       _this.getQslInfo()
-    }, this.moduleConfig.refreshTime)
+    }, this.baseConfig.refreshTime)
   },
   destroyed () {
-    clearInterval(this.moduleConfig.timer)
+    clearInterval(this.baseConfig.timer)
   }
 }
 </script>

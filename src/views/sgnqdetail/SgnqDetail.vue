@@ -231,7 +231,7 @@ export default {
   components: { TitleText, PjjgChartTwo, Slide2 },
   data () {
     return {
-      baseMapSrc: this.moduleConfig.mapPath + '#', // 三维页面基础路径
+      baseMapSrc: this.baseConfig.mapPath + '#', // 三维页面基础路径
       slideShow: true, // 是否显示多媒体轮播图组件
       sgnqInfo: {// 基本信息数据
         WFZNM: '', // 水源地名称
@@ -382,7 +382,7 @@ export default {
       let datas = {
         wfzCd: id
       }
-      this.axios.post(this.moduleConfig.api + 'waterFunctionZoneController/getWfzInfo.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterFunctionZoneController/getWfzInfo.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -402,7 +402,7 @@ export default {
         // startTime: BaseFun.formatDate(new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000), 'yyyy-MM'),
         // endTime: BaseFun.formatDate(new Date(), 'yyyy-MM')
       }
-      this.axios.post(this.moduleConfig.api + 'waterFunctionZoneController/getWfzData.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterFunctionZoneController/getWfzData.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -420,7 +420,7 @@ export default {
       let datas = {
         wfzCd: id
       }
-      this.axios.post(this.moduleConfig.api + 'waterFunctionZoneController/getImgsByWfzCd.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterFunctionZoneController/getImgsByWfzCd.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -446,7 +446,7 @@ export default {
       let datas = {
         wfzCd: id
       }
-      this.axios.post(this.moduleConfig.api + 'waterFunctionZoneController/getWfzIndex.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'waterFunctionZoneController/getWfzIndex.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -475,15 +475,15 @@ export default {
     this.getDmtData(this.waterAreaId)
     this.getJcjgData(this.waterAreaId)
     let _this = this
-    this.moduleConfig.timer = setInterval(() => {
+    this.baseConfig.timer = setInterval(() => {
       _this.getSgnqInfo(this.waterAreaId)
       _this.getPjjgData(this.waterAreaId)
       _this.getDmtData(this.waterAreaId)
       _this.getJcjgData(this.waterAreaId)
-    }, this.moduleConfig.refreshTime)
+    }, this.baseConfig.refreshTime)
   },
   destroyed () {
-    clearInterval(this.moduleConfig.timer)
+    clearInterval(this.baseConfig.timer)
   }
 }
 </script>

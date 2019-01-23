@@ -1,0 +1,6 @@
+{
+  "serverName" : "MonitoringDisplay",
+  "mapPath" : "http://192.168.10.168/gdswearth/",
+  "refreshTime" : 300000,
+  "timer" : {}
+}

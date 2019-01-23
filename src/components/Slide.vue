@@ -76,7 +76,7 @@ export default {
       let _this = this
       return this.data.map(function (item) {
         return {
-          url: encodeURI(encodeURI(encodeURI(`${_this.moduleConfig.api}wiuOnlinMonit/getThumbnailImg.do?url=${item.url}&width=288&height=175`))),
+          url: encodeURI(encodeURI(encodeURI(`${_this.baseConfig.api}wiuOnlinMonit/getThumbnailImg.do?url=${item.url}&width=288&height=175`))),
           name: item.name
         }
       })

@@ -108,7 +108,7 @@ export default {
     // 请求按行政区划统计的取水户数据
     getMapInfo () {
       let _this = this
-      this.axios.post(this.moduleConfig.api + 'wiuOnlinMonit/getQshStatByDivision.do', {
+      this.axios.post(this.baseConfig.api + 'wiuOnlinMonit/getQshStatByDivision.do', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -127,7 +127,7 @@ export default {
       let datas = {
         V_WPC_CD: '891209472001'
       }
-      this.axios.post(this.moduleConfig.api + 'SsjkController/getSsjkGkxx.do', JSON.stringify(datas), {
+      this.axios.post(this.baseConfig.api + 'SsjkController/getSsjkGkxx.do', JSON.stringify(datas), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -148,13 +148,13 @@ export default {
     this.getMapInfo()
     this.getQslInfo()
     let _this = this
-    this.moduleConfig.timer = setInterval(() => {
+    this.baseConfig.timer = setInterval(() => {
       _this.getMapInfo()
       _this.getQslInfo()
-    }, this.moduleConfig.refreshTime)
+    }, this.baseConfig.refreshTime)
   },
   destroyed () {
-    clearInterval(this.moduleConfig.timer)
+    clearInterval(this.baseConfig.timer)
   }
 }
 </script>
