@@ -20,7 +20,7 @@ mark{background-color:transparent}
 a,ins,s,u,del{text-decoration:none}
 sup,sub{vertical-align:baseline}
 html {overflow: hidden;height: 100%;font-size: 50px;-webkit-tap-highlight-color: transparent;}
-body {font-family: Arial, "Microsoft Yahei", "Helvetica Neue", Helvetica, sans-serif;color: #333;font-size: .28em;line-height: 1;-webkit-text-size-adjust: none;}
+body {font-family: Arial, "Microsoft Yahei", "Helvetica Neue", Helvetica, sans-serif;color: #333;font-size: .28em;line-height: 1;-webkit-text-size-adjust: none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
 hr {height: .02rem;margin: .1rem 0;border: medium none;border-top: .02rem solid #cacaca;}
 a {color: #25a4bb;text-decoration: none;}
 .clearfix:after{
@@ -30,16 +30,16 @@ a {color: #25a4bb;text-decoration: none;}
 }
 @font-face {
   font-family: Quartz;
-  /*src: url('../fonts/Quartz.ttf'),*/
-       /*url('../fonts/Quartz.eot?#iefix') format('embedded-opentype');*/
+  /*src: url('../../fonts/Quartz.ttf'),*/
+  /*url('../../fonts/Quartz.eot?#iefix') format('embedded-opentype');*/
   src: url('../fonts/DIGITAL-Regular.ttf'),
-       url('../fonts/DIGITAL-Regular.eot?#iefix') format('embedded-opentype');
+  url('../fonts/DIGITAL-Regular.eot?#iefix') format('embedded-opentype');
 }
 /*el-tooltip*/
 .el-tooltip__popper.is-dark{
   background: rgba(0,0,0,.8);
   border:1px solid rgb(68, 127, 196);
-  font-size: 14px;
+  font-size: 22px;
 }
 .el-tooltip__popper .popper__arrow, .el-tooltip__popper .popper__arrow:after{
   display: none !important;
@@ -49,4 +49,7 @@ a {color: #25a4bb;text-decoration: none;}
   top: -226px;
   height: 1080px;
   transform: scaleY(0.5815);
+}
+.viewer-footer .viewer-title{
+  font-size: 22px
 }

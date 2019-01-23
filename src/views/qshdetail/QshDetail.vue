@@ -147,6 +147,9 @@ export default {
       },
       dmt: [], // 多媒体图片数据
       xcjk: [// 现场监控图片数据
+        { url: '', name: '' },
+        { url: '', name: '' },
+        { url: '', name: '' },
         { url: '', name: '' }
       ],
       cdsl: [// 各监测点数据
