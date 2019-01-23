@@ -51,11 +51,11 @@ module.exports = {
     port: 8080,
     // 设置代理
     proxy: {
-      '/MonitoringDisplayed': {
+      '/MonitoringDisplay': {
         target: 'http://10.100.9.43:8083', // 代理接口
         changeOrigin: false, // 是否不同ip
         pathRewrite: {
-          '^/MonitoringDisplayed': '/MonitoringDisplayed' // 代理的路径
+          '^/MonitoringDisplay': '/MonitoringDisplay' // 代理的路径
         }
       }
     }
